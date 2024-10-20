@@ -18,53 +18,49 @@ class DrinkType extends AbstractType
 
         $builder
             ->add('teaOrCoffee', ChoiceType::class, [
+                'placeholder' => '-- Choisir --',
+                'label' => 'Thé ou Café ?',
                 'choices' => [
                     'Thé' => 'tea',
                     'Café' => 'coffee',
                 ],
-                'expanded' => false,
-                'multiple' => false,
-                'autocomplete' => true,
-                
+                'autocomplete' => true
             ])
             ->addDependent('teaType', 'teaOrCoffee', function (DependentField $field, ?string $teaOrCoffee) {
                 if($teaOrCoffee !== 'tea') {
                     return;
                 }
-                    $field
-                    ->add('teaType', ChoiceType::class, [
+                $field
+                    ->add(ChoiceType::class, [
+                        'label' => false,
+                        'placeholder' => '-- Choisir le thé --',
                         'choices' => [
                             'Thé noir' => 'black',
                             'Thé vert' => 'green',
                         ],
-                        'expanded' => false,
-                        'multiple' => false,
                         'autocomplete' => true,
                     ]);
-                
             })
             ->addDependent('coffeeType', 'teaOrCoffee', function (DependentField $field, ?string $teaOrCoffee) {
                 if($teaOrCoffee !== 'coffee') {
                     return;
                 }
-                    $field->add('coffeeType', ChoiceType::class, [
-                        'choices' => [
-                            'Café noir' => 'black',
-                            'Café avec lait' => 'with_milk',
-                        ],
-                        'expanded' => false,
-                        'multiple' => false,
-                        'autocomplete' => true,
-                    ]);
-                
+                $field->add(ChoiceType::class, [
+                    'label' => false,
+                    'placeholder' => '-- Choisir le café --',
+                    'choices' => [
+                        'Café noir' => 'black',
+                        'Café avec lait' => 'with_milk',
+                    ],
+                    'autocomplete' => true,
+                ]);
             })
            ->add('sugar', ChoiceType::class, [
+               'label' => 'Sucre',
                'choices' => [
                    'Avec sucre' => true,
                    'Sans sucre' => false,
                ],
-               'expanded' => false,
-               'multiple' => false,
                'autocomplete' => true,
             ]);
         
